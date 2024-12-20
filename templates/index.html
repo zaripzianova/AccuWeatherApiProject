@@ -17,8 +17,8 @@
 </form>
     {% if weather_data %}
         <h2>Результаты прогноза:</h2>
-        <p><strong>Начальная точка маршрута:</strong> {{ weather_data['start_point'] }}</p>
-        <p><strong>Конечная точка маршрута:</strong> {{ weather_data['end_point'] }}</p>
+        <p><strong>Начальная точка маршрута:</strong> {{ weather_data['start_city'] }}</p>
+        <p><strong>Конечная точка маршрута:</strong> {{ weather_data['end_city'] }}</p>
         <p><strong>Погода в {{ weather_data['start_point'] }}:</strong> {{ weather_data['start_weather'] }}</p>
         <p><strong>Погода в {{ weather_data['end_city'] }}:</strong> {{ weather_data['end_weather'] }}</p>
     {% endif %}
