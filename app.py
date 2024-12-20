@@ -23,7 +23,7 @@ def get_location_key(lat, lon):
     try:
         response = requests.get(url, params=params)
         data = response.json()
-        return data['Key']
+        return data
     except requests.exceptions.RequestException as e:
         print(f"Ошибка запроса: {e}")
         return None
@@ -97,9 +97,11 @@ def index():
         start_point = request.form["start_point"]
         end_point = request.form["end_point"]
         lat, lon = start_point.split(',')
-        start_point_key = get_location_key(lat, lon)
+        start_point_params = get_location_key(lat, lon)
+        start_point_key = start_point_params['Key']
         lat, lon = end_point.split(',')
-        end_point_key = get_location_key(lat, lon)
+        end_point_params = get_location_key(lat, lon)
+        end_point_key = end_point_params['Key']
         start_weather = get_current_forecast(start_point_key)
         end_weather = get_current_forecast(end_point_key)
         # 51.514,-0.107
@@ -109,10 +111,11 @@ def index():
 
         start_weather_evaluation = check_bad_weather(start_weather)
         end_weather_evaluation = check_bad_weather(end_weather)
+        print(end_weather)
 
         weather_data = {
-            "start_city": start_point_key['ParentCity']['LocalizedName'],
-            "end_city": end_point_key['ParentCity']['LocalizedName'],
+            "start_city": start_point_params['LocalizedName'],
+            "end_city": end_point_params['LocalizedName'],
             "start_weather": start_weather_evaluation,
             "end_weather": end_weather_evaluation
         }
